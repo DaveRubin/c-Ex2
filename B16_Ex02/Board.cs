@@ -6,8 +6,8 @@ namespace B16_Ex02
 {
     class Board
     {
-        private readonly int m_rows;
-        private readonly int m_columns;
+        public readonly int m_rows;
+        public readonly int m_columns;
         private eSlotState[,] slotsMatrix;
 
         private const char P1Symbol = 'O';
@@ -18,31 +18,39 @@ namespace B16_Ex02
         private const char TableHorizontalSeperatorChar = '|';
         private const char TableVerticalSeperatorChar = '=';
 
+        public bool IsFull
+        {
+            get
+            {
+                return GetFreeColumns().Count == 0;
+            }
+        }
 
-        //on construction, create the new matrix and initialize memebers
+        /// <summary>
+        /// on construction, create the new matrix and initialize memebers
+        /// </summary>
+        /// <param name="i_columns"></param>
+        /// <param name="i_rows"></param>
         public Board(int i_columns, int i_rows )
         {
             m_rows = i_rows;
             m_columns = i_columns;
             slotsMatrix = new eSlotState[i_columns, i_rows];
-            ClearBoard();
-            PrintBoard();
+            SetAllToEmpty();
         }
+
+
 
         /// <summary>
-        /// Clear screen and draw board again 
+        /// Clear screen and Prints the board 
         /// </summary>
-        public void UpdateBoard()
-        {
-            Ex02.ConsoleUtils.Screen.Clear();
-            PrintBoard();
-        }
-
         public void PrintBoard()
         {
             StringBuilder separatorRow = new StringBuilder();
             int seperatorRowLength = m_columns * (SlotTemplate.Length - 1) + 1;
             separatorRow.Append(TableVerticalSeperatorChar, seperatorRowLength);
+
+            Ex02.ConsoleUtils.Screen.Clear();
             PrintHeaderRow();
             for (int row = 0; row < m_rows; row++)
             {
@@ -68,17 +76,24 @@ namespace B16_Ex02
             Console.Write(Environment.NewLine);
         }
 
+        /// <summary>
+        /// Print the board header with number for each column
+        /// </summary>
         private void PrintHeaderRow()
         {
             Console.Write(' ');
             for (int column = 0; column < m_columns; column++)
             {
-                Console.Write(string.Format(SlotTemplate, column));
+                Console.Write(string.Format(SlotTemplate, column + 1));
                 Console.Write(' ');
             }
             Console.Write(Environment.NewLine);
         }
 
+        /// <summary>
+        /// Print board slot from string template
+        /// </summary>
+        /// <param name="i_slotType"></param>
         private void Printslot(eSlotState i_slotType)
         {
             char slotPieceView = EmptySymbol;
@@ -100,19 +115,10 @@ namespace B16_Ex02
             Console.Write(string.Format(SlotTemplate,slotPieceView));
         }
 
-        //Set all slots to "empty"
-        public void ClearBoard()
-        {
-            for (int i = 0; i < m_columns; i++)
-            {
-                for (int j = 0; j < m_rows; j++)
-                {
-                    slotsMatrix[i, j] = eSlotState.Empty;
-                }
-            }
-        }
-
-        //returns an array containing the indexes of the free columns
+        /// <summary>
+        /// returns an array containing the indexes of the free columns
+        /// </summary>
+        /// <returns></returns>
         public List<int> GetFreeColumns()
         {
             List<int> freeColumns = new List<int>();
@@ -153,6 +159,25 @@ namespace B16_Ex02
             return success;
         }
 
+        /// <summary>
+        /// Set all slots to be "Empty"
+        /// </summary>
+        private void SetAllToEmpty()
+        {
+            for (int i = 0; i < m_columns; i++)
+            {
+                for (int j = 0; j < m_rows; j++)
+                {
+                    slotsMatrix[i, j] = eSlotState.Empty;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Check if a given column is free 
+        /// </summary>
+        /// <param name="i_column"></param>
+        /// <returns></returns>
         private bool IsColumnFree(int i_column)
         {
             return (slotsMatrix[i_column, 0] == eSlotState.Empty);
