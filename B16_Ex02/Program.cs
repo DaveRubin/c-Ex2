@@ -8,7 +8,7 @@ namespace B16_Ex02
     {
         public static void Main()
         {
-            Console.WriteLine("A");
+            FourInARowGame game = new FourInARowGame();
         }
     }
 }
