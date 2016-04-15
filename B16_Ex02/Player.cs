@@ -4,11 +4,12 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    class Player
+    internal class Player
     {
-        public Player()
+        public readonly string r_name;
+        public Player(string i_name)
         {
-            
+            r_name = i_name;
         }
 
         public virtual int SelectColumn()
