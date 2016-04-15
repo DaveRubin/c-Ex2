@@ -36,7 +36,7 @@ namespace B16_Ex02
             m_rows = i_rows;
             m_columns = i_columns;
             slotsMatrix = new eSlotState[i_columns, i_rows];
-            SetAllToEmpty();
+            EmptyBoard();
         }
 
 
@@ -162,7 +162,7 @@ namespace B16_Ex02
         /// <summary>
         /// Set all slots to be "Empty"
         /// </summary>
-        private void SetAllToEmpty()
+        public void EmptyBoard()
         {
             for (int i = 0; i < m_columns; i++)
             {

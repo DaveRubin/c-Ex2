@@ -67,10 +67,6 @@ Press enter to exit";
             return selectedGameMode;
         }
 
-        /// <summary>
-        /// Prints a 
-        /// </summary>
-        /// <param name="i_winnerName"></param>
         public static void ShowWinScreen(string i_winnerName)
         {
             Ex02.ConsoleUtils.Screen.Clear();

@@ -18,6 +18,7 @@ namespace B16_Ex02
         private int m_currentPlayerIndex;
         private eGameMode m_gameMode;
 
+        private const string k_playersTurnTextTemplate = "{0}'s turn";
 
         public FourInARowGame()
         {
@@ -65,11 +66,11 @@ namespace B16_Ex02
 
             if (m_gameMode == eGameMode.TwoPlayers)
             {
-                m_players.Add(new ComputerPlayer());
+                m_players.Add(new HumanPlayer(k_Player2Name));
             }
             else
             {
-                m_players.Add(new HumanPlayer(k_Player2Name));
+                m_players.Add(new ComputerPlayer());
             }
         }
 
@@ -87,6 +88,7 @@ namespace B16_Ex02
         private void TakeTurn()
         {
             m_board.PrintBoard();
+            Console.WriteLine(string.Format(k_playersTurnTextTemplate, m_players[m_currentPlayerIndex].r_name));
             PlayerMove();
             if (CheckIfWin())
             {
@@ -121,7 +123,9 @@ namespace B16_Ex02
 
         private void Restart()
         {
-            
+            m_board.EmptyBoard();
+            m_currentPlayerIndex = 0;
+            TakeTurn();
         }
 
         private void ShowGameWinScreen()
