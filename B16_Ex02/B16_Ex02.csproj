@@ -36,6 +36,7 @@
     <Compile Include="ComputerPlayer.cs" />
     <Compile Include="FourInARowGame.cs" />
     <Compile Include="GameColors.cs" />
+    <Compile Include="GameKeys.cs" />
     <Compile Include="GameTexts.cs" />
     <Compile Include="HumanPlayer.cs" />
     <Compile Include="Menus.cs" />

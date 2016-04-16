@@ -44,12 +44,12 @@ namespace B16_Ex02
             Console.ForegroundColor = GameColors.k_MenuHeadersColor;
             FourInARowGame.eGameMode selectedGameMode = FourInARowGame.eGameMode.ManVsMachine;
             string descriptionText = string.Format(GameTexts.k_GameModeDescriptionTemplate,
-                GameTexts.k_TwoPlayersSelectionKey, GameTexts.k_ManVsMachineSelectionKey);
+                GameKeys.k_TwoPlayersSelectionKey, GameKeys.k_ManVsMachineSelectionKey);
             Console.WriteLine(string.Format(GameTexts.k_MenuHeaderTemplate, GameTexts.k_GameModeTitle, descriptionText));
 
-            char userInput = InputUtils.GetSepcificCharsFromConsole(GameTexts.k_TwoPlayersSelectionKey, GameTexts.k_ManVsMachineSelectionKey);
+            char userInput = InputUtils.GetSepcificCharsFromConsole(GameKeys.k_TwoPlayersSelectionKey, GameKeys.k_ManVsMachineSelectionKey);
 
-            if (userInput == GameTexts.k_TwoPlayersSelectionKey)
+            if (userInput == GameKeys.k_TwoPlayersSelectionKey)
             {
                 selectedGameMode = FourInARowGame.eGameMode.TwoPlayers;
             }
@@ -61,13 +61,13 @@ namespace B16_Ex02
         /// <summary>
         /// Prints win screen, adds winner name to screen template
         /// </summary>
-        /// <param name="i_winnerName"></param>
-        public static void ShowWinScreen(string i_winnerName)
+        /// <param name="i_winner"></param>
+        public static void ShowWinScreen(Player i_winner)
         {
             Console.ForegroundColor = GameColors.k_WinColor;
             Ex02.ConsoleUtils.Screen.Clear();
 
-            Console.WriteLine(string.Format(GameTexts.k_WinScreenTemplate, i_winnerName));
+            Console.WriteLine(string.Format(GameTexts.k_WinScreenTemplate, i_winner.r_name));
             Console.ReadLine();
             Console.ForegroundColor = GameColors.k_BaseColor;
         }
@@ -100,10 +100,10 @@ namespace B16_Ex02
                     i_playersList[0].Score,
                     i_playersList[1].r_name,
                     i_playersList[1].Score,
-                    GameTexts.k_YesKey,
-                    GameTexts.k_NoKey));
-            char selectionChar = InputUtils.GetSepcificCharsFromConsole(GameTexts.k_YesKey, GameTexts.k_NoKey);
-            return selectionChar == GameTexts.k_YesKey;
+                    GameKeys.k_YesKey,
+                    GameKeys.k_NoKey));
+            char selectionChar = InputUtils.GetSepcificCharsFromConsole(GameKeys.k_YesKey, GameKeys.k_NoKey);
+            return selectionChar == GameKeys.k_YesKey;
         }
 
         public static void GoodByeScreen()

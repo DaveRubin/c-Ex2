@@ -9,6 +9,11 @@ namespace B16_Ex02
     /// </summary>
     internal class GameTexts
     {
+
+        public const string k_ColumnIsntFreeMessageTemplate = "Column {0} isn't free, please choose another";
+        public const string k_playersTurnTextTemplate = "{0}'s turn";
+        public const string k_Player1Name = "Player1";
+        public const string k_Player2Name = "Player2";
         public const string k_DimensionsInputTemplate = "Please enter number of {0} between {1} and {2}";
         public const string k_MenuHeaderTemplate =
 @"========================================================
@@ -22,8 +27,6 @@ namespace B16_Ex02
         public const string k_DimensionsDescriptionTemplate = "Dimensions must be between {0}X{0} and {1}X{1} ";
         public const string k_GameModeTitle = "Game mode selection";
         public const string k_GameModeDescriptionTemplate = "Enter '{0}' for two players or '{1}' for human vs machine";
-        public const char k_TwoPlayersSelectionKey = '1';
-        public const char k_ManVsMachineSelectionKey = '2';
         public const string k_WinScreenTemplate = 
 @"=========================================================
 
@@ -54,10 +57,8 @@ namespace B16_Ex02
             -'{5}' to exit.
 
 =========================================================";
-        public const char k_YesKey = 'y';
-        public const char k_NoKey = 'n';
-        public const string k_GoodByeMessage = @"
-=======================================
+        public const string k_GoodByeMessage = 
+@"=======================================
 =                                     =
 =                                     =
 =             Good bye!               =

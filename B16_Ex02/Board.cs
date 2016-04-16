@@ -6,14 +6,13 @@ namespace B16_Ex02
 {
     internal class Board
     {
-        public readonly int m_rows;
-        public readonly int m_columns;
+        public readonly int r_rows;
+        public readonly int r_columns;
         private eSlotState[,] slotsMatrix;
 
         private const char P1Symbol = 'O';
         private const char P2Symbol = 'X';
         private const char EmptySymbol = ' ';
-
         private const string SlotTemplate = @"  {0}  ";
         private const char TableHorizontalSeperatorChar = '|';
         private const char TableVerticalSeperatorChar = '=';
@@ -22,7 +21,16 @@ namespace B16_Ex02
         {
             get
             {
-                return GetFreeColumns().Count == 0;
+                bool result = true;
+                for (int i = 0; i < r_columns; i++)
+                {
+                    if (IsColumnFree(i))
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                return result;
             }
         }
 
@@ -33,8 +41,8 @@ namespace B16_Ex02
         /// <param name="i_rows"></param>
         public Board(int i_columns, int i_rows )
         {
-            m_rows = i_rows;
-            m_columns = i_columns;
+            r_rows = i_rows;
+            r_columns = i_columns;
             slotsMatrix = new eSlotState[i_columns, i_rows];
             EmptyBoard();
         }
@@ -47,14 +55,14 @@ namespace B16_Ex02
         public void PrintBoard()
         {
             StringBuilder separatorRow = new StringBuilder();
-            int seperatorRowLength = m_columns * (SlotTemplate.Length - 1) + 1;
+            int seperatorRowLength = r_columns * (SlotTemplate.Length - 1) + 1;
             separatorRow.Append(TableVerticalSeperatorChar, seperatorRowLength);
 
             Ex02.ConsoleUtils.Screen.Clear();
             PrintHeaderRow();
-            for (int row = 0; row < m_rows; row++)
+            for (int row = 0; row < r_rows; row++)
             {
-                for (int column = 0; column < m_columns; column++)
+                for (int column = 0; column < r_columns; column++)
                 {
                     eSlotState slotType = slotsMatrix[column, row];
 
@@ -82,7 +90,7 @@ namespace B16_Ex02
         private void PrintHeaderRow()
         {
             Console.Write(' ');
-            for (int column = 0; column < m_columns; column++)
+            for (int column = 0; column < r_columns; column++)
             {
                 Console.Write(string.Format(SlotTemplate, column + 1));
                 Console.Write(' ');
@@ -115,25 +123,6 @@ namespace B16_Ex02
             Console.Write(string.Format(SlotTemplate,slotPieceView));
         }
 
-        /// <summary>
-        /// returns an array containing the indexes of the free columns
-        /// </summary>
-        /// <returns></returns>
-        public List<int> GetFreeColumns()
-        {
-            List<int> freeColumns = new List<int>();
-
-            for (int i = 0; i < m_columns; i++)
-            {
-                if (IsColumnFree(i))
-                {
-                    freeColumns.Add(i);
-                }
-            }
-
-            return freeColumns;
-        }
-
         //add piece to column , 
         //return false if column is full
         public bool AddPieceToColumn(int i_column, eSlotState i_pieceType)
@@ -142,7 +131,7 @@ namespace B16_Ex02
 
             if (IsColumnFree(i_column))
             {
-                int targetRow = m_rows - 1;
+                int targetRow = r_rows - 1;
 
                 while (slotsMatrix[i_column, targetRow] != eSlotState.Empty)
                 {
@@ -164,9 +153,9 @@ namespace B16_Ex02
         /// </summary>
         public void EmptyBoard()
         {
-            for (int i = 0; i < m_columns; i++)
+            for (int i = 0; i < r_columns; i++)
             {
-                for (int j = 0; j < m_rows; j++)
+                for (int j = 0; j < r_rows; j++)
                 {
                     slotsMatrix[i, j] = eSlotState.Empty;
                 }
