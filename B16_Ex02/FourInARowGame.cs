@@ -25,20 +25,6 @@ namespace B16_Ex02
             InitializeBoard();
             InitializeGameMode();
             StartGame();
-//            Board b = new Board(5,4);
-//            Console.ReadLine();
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player2);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.UpdateBoard();
-//            Console.ReadLine();
-//            b.AddPieceToColumn(0, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(1, Board.eSlotState.Player2);
-//            b.AddPieceToColumn(3, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(0, Board.eSlotState.Player2);
-//            b.UpdateBoard();
         }
 
         /// <summary>
@@ -111,14 +97,7 @@ namespace B16_Ex02
         private void ShowGameTieScreen()
         {
             Menus.ShowTieScreen();
-            if (Menus.RestartGameMessage())
-            {
-                Restart();
-            }
-            else
-            {
-                Menus.GoodByeScreen();
-            }
+            ShowRestartQuestion();
         }
 
         private void Restart()
@@ -130,7 +109,23 @@ namespace B16_Ex02
 
         private void ShowGameWinScreen()
         {
-            Menus.ShowWinScreen(m_players[m_currentPlayerIndex].r_name);
+            Player winner = m_players[m_currentPlayerIndex];
+            winner.Score++;
+            Menus.ShowWinScreen(winner.r_name);
+            ShowRestartQuestion();
+        }
+
+        private void ShowRestartQuestion()
+        {
+            bool restartGameUserSelection = Menus.RestartGameMessage(m_players);
+            if (restartGameUserSelection)
+            {
+                Restart();
+            }
+            else
+            {
+                Menus.GoodByeScreen();
+            }
         }
 
         private bool CheckIfWin()

@@ -51,6 +51,7 @@ namespace B16_Ex02
 
                 while (validcharsString.IndexOf(result) == -1)
                 {
+                    //TODO: imporve user feedback on invalid input
                     Console.WriteLine("Please enter a charecter from these valid characters: '{0}' ", validcharsString);
                     result = GetSingleCharFromConsole();
                 }
