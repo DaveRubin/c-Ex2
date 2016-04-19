@@ -6,9 +6,9 @@ namespace B16_Ex02
 {
     internal class Board
     {
-        public readonly int r_rows;
-        public readonly int r_columns;
-        private eSlotState[,] m_slotsMatrix;
+        public readonly int r_numOfRows;
+        public readonly int r_numOfColumns;
+        public eSlotState[,] m_slotsMatrix;
 
         private const char k_P1Symbol = 'O';
         private const char k_P2Symbol = 'X';
@@ -31,7 +31,7 @@ namespace B16_Ex02
             get
             {
                 bool result = true;
-                for (int i = 0; i < r_columns; i++)
+                for (int i = 0; i < r_numOfColumns; i++)
                 {
                     if (IsColumnFree(i))
                     {
@@ -50,8 +50,8 @@ namespace B16_Ex02
         /// <param name="i_rows"></param>
         public Board(int i_columns, int i_rows )
         {
-            r_rows = i_rows;
-            r_columns = i_columns;
+            r_numOfRows = i_rows;
+            r_numOfColumns = i_columns;
             m_slotsMatrix = new eSlotState[i_columns, i_rows];
             EmptyBoard();
         }
@@ -64,14 +64,14 @@ namespace B16_Ex02
         public void PrintBoard()
         {
             StringBuilder separatorRow = new StringBuilder();
-            int seperatorRowLength = r_columns * (k_SlotTemplate.Length - 1) + 1;
+            int seperatorRowLength = r_numOfColumns * (k_SlotTemplate.Length - 1) + 1;
             separatorRow.Append(k_TableVerticalSeperatorChar, seperatorRowLength);
 
             Ex02.ConsoleUtils.Screen.Clear();
             PrintHeaderRow();
-            for (int row = 0; row < r_rows; row++)
+            for (int row = 0; row < r_numOfRows; row++)
             {
-                for (int column = 0; column < r_columns; column++)
+                for (int column = 0; column < r_numOfColumns; column++)
                 {
                     eSlotState slotType = m_slotsMatrix[column, row];
 
@@ -99,7 +99,7 @@ namespace B16_Ex02
         private void PrintHeaderRow()
         {
             Console.Write(' ');
-            for (int column = 0; column < r_columns; column++)
+            for (int column = 0; column < r_numOfColumns; column++)
             {
                 Console.Write(string.Format(k_SlotTemplate, column + 1));
                 Console.Write(' ');
@@ -140,7 +140,7 @@ namespace B16_Ex02
 
             if (IsColumnFree(i_column))
             {
-                int targetRow = r_rows - 1;
+                int targetRow = r_numOfRows - 1;
 
                 while (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
                 {
@@ -156,15 +156,28 @@ namespace B16_Ex02
 
             return success;
         }
+        //remove piece from column
+        public void RemovePieceFromColumn(int i_column)
+        {
+            int targetRow = r_numOfRows - 1;
+            if (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
+            {
+                while (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
+                {
+                    targetRow--;
+                }
+                m_slotsMatrix[i_column, targetRow + 1] = eSlotState.Empty;
+            }
+        }
 
         /// <summary>
         /// Set all slots to be "Empty"
         /// </summary>
         public void EmptyBoard()
         {
-            for (int i = 0; i < r_columns; i++)
+            for (int i = 0; i < r_numOfColumns; i++)
             {
-                for (int j = 0; j < r_rows; j++)
+                for (int j = 0; j < r_numOfRows; j++)
                 {
                     m_slotsMatrix[i, j] = eSlotState.Empty;
                 }
