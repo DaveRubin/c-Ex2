@@ -140,12 +140,11 @@ namespace B16_Ex02
 
         /// <summary>
         /// Check board for winner
-        /// TODO: implement method using 'BoardAnalyser'
         /// </summary>
         /// <returns></returns>
         private bool CheckIfWin()
         {
-            return false;
+            return BoardAnalyzer.IsGameWon(ref m_board);
         }
 
         /// <summary>
