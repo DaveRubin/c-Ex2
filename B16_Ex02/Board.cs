@@ -6,23 +6,40 @@ namespace B16_Ex02
 {
     internal class Board
     {
-        public readonly int m_rows;
-        public readonly int m_columns;
-        private eSlotState[,] slotsMatrix;
+        public readonly int r_numOfRows;
+        public readonly int r_numOfColumns;
+        public eSlotState[,] m_slotsMatrix;
 
-        private const char P1Symbol = 'O';
-        private const char P2Symbol = 'X';
-        private const char EmptySymbol = ' ';
+        private const char k_P1Symbol = 'O';
+        private const char k_P2Symbol = 'X';
+        private const char k_EmptySymbol = ' ';
+        private const string k_SlotTemplate = @"  {0}  ";
+        private const char k_TableHorizontalSeperatorChar = '|';
+        private const char k_TableVerticalSeperatorChar = '=';
 
-        private const string SlotTemplate = @"  {0}  ";
-        private const char TableHorizontalSeperatorChar = '|';
-        private const char TableVerticalSeperatorChar = '=';
+        public eSlotState[,] SlotsMatrix
+        {
+            get
+            {
+                //TODO: ask about a more efficient way to get the matrix out and still protect 'slotsMatrix' data
+                return (eSlotState[,])m_slotsMatrix.Clone();
+            }
+        }
 
         public bool IsFull
         {
             get
             {
-                return GetFreeColumns().Count == 0;
+                bool result = true;
+                for (int i = 0; i < r_numOfColumns; i++)
+                {
+                    if (IsColumnFree(i))
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                return result;
             }
         }
 
@@ -33,10 +50,10 @@ namespace B16_Ex02
         /// <param name="i_rows"></param>
         public Board(int i_columns, int i_rows )
         {
-            m_rows = i_rows;
-            m_columns = i_columns;
-            slotsMatrix = new eSlotState[i_columns, i_rows];
-            SetAllToEmpty();
+            r_numOfRows = i_rows;
+            r_numOfColumns = i_columns;
+            m_slotsMatrix = new eSlotState[i_columns, i_rows];
+            EmptyBoard();
         }
 
 
@@ -47,24 +64,24 @@ namespace B16_Ex02
         public void PrintBoard()
         {
             StringBuilder separatorRow = new StringBuilder();
-            int seperatorRowLength = m_columns * (SlotTemplate.Length - 1) + 1;
-            separatorRow.Append(TableVerticalSeperatorChar, seperatorRowLength);
+            int seperatorRowLength = r_numOfColumns * (k_SlotTemplate.Length - 1) + 1;
+            separatorRow.Append(k_TableVerticalSeperatorChar, seperatorRowLength);
 
             Ex02.ConsoleUtils.Screen.Clear();
             PrintHeaderRow();
-            for (int row = 0; row < m_rows; row++)
+            for (int row = 0; row < r_numOfRows; row++)
             {
-                for (int column = 0; column < m_columns; column++)
+                for (int column = 0; column < r_numOfColumns; column++)
                 {
-                    eSlotState slotType = slotsMatrix[column, row];
+                    eSlotState slotType = m_slotsMatrix[column, row];
 
                     if (column == 0)
                     {
-                        Console.Write(TableHorizontalSeperatorChar);
+                        Console.Write(k_TableHorizontalSeperatorChar);
                     }
 
                     Printslot(slotType);
-                    Console.Write(TableHorizontalSeperatorChar);
+                    Console.Write(k_TableHorizontalSeperatorChar);
 
                 }
 
@@ -82,9 +99,9 @@ namespace B16_Ex02
         private void PrintHeaderRow()
         {
             Console.Write(' ');
-            for (int column = 0; column < m_columns; column++)
+            for (int column = 0; column < r_numOfColumns; column++)
             {
-                Console.Write(string.Format(SlotTemplate, column + 1));
+                Console.Write(string.Format(k_SlotTemplate, column + 1));
                 Console.Write(' ');
             }
             Console.Write(Environment.NewLine);
@@ -96,42 +113,23 @@ namespace B16_Ex02
         /// <param name="i_slotType"></param>
         private void Printslot(eSlotState i_slotType)
         {
-            char slotPieceView = EmptySymbol;
+            char slotPieceView = k_EmptySymbol;
             switch (i_slotType)
             {
                 case  eSlotState.Empty:
-                    slotPieceView = EmptySymbol;
+                    slotPieceView = k_EmptySymbol;
                     break;
                     
                 case  eSlotState.Player1:
-                    slotPieceView = P1Symbol;
+                    slotPieceView = k_P1Symbol;
                     break;
                 
                 case eSlotState.Player2:
-                    slotPieceView = P2Symbol;
+                    slotPieceView = k_P2Symbol;
                     break;
             }
 
-            Console.Write(string.Format(SlotTemplate,slotPieceView));
-        }
-
-        /// <summary>
-        /// returns an array containing the indexes of the free columns
-        /// </summary>
-        /// <returns></returns>
-        public List<int> GetFreeColumns()
-        {
-            List<int> freeColumns = new List<int>();
-
-            for (int i = 0; i < m_columns; i++)
-            {
-                if (IsColumnFree(i))
-                {
-                    freeColumns.Add(i);
-                }
-            }
-
-            return freeColumns;
+            Console.Write(string.Format(k_SlotTemplate,slotPieceView));
         }
 
         //add piece to column , 
@@ -142,14 +140,14 @@ namespace B16_Ex02
 
             if (IsColumnFree(i_column))
             {
-                int targetRow = m_rows - 1;
+                int targetRow = r_numOfRows - 1;
 
-                while (slotsMatrix[i_column, targetRow] != eSlotState.Empty)
+                while (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
                 {
                     targetRow--;
                 }
 
-                slotsMatrix[i_column, targetRow] = i_pieceType;
+                m_slotsMatrix[i_column, targetRow] = i_pieceType;
             }
             else
             {
@@ -158,17 +156,30 @@ namespace B16_Ex02
 
             return success;
         }
+        //remove piece from column
+        public void RemovePieceFromColumn(int i_column)
+        {
+            int targetRow = r_numOfRows - 1;
+            if (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
+            {
+                while (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
+                {
+                    targetRow--;
+                }
+                m_slotsMatrix[i_column, targetRow + 1] = eSlotState.Empty;
+            }
+        }
 
         /// <summary>
         /// Set all slots to be "Empty"
         /// </summary>
-        private void SetAllToEmpty()
+        public void EmptyBoard()
         {
-            for (int i = 0; i < m_columns; i++)
+            for (int i = 0; i < r_numOfColumns; i++)
             {
-                for (int j = 0; j < m_rows; j++)
+                for (int j = 0; j < r_numOfRows; j++)
                 {
-                    slotsMatrix[i, j] = eSlotState.Empty;
+                    m_slotsMatrix[i, j] = eSlotState.Empty;
                 }
             }
         }
@@ -180,7 +191,7 @@ namespace B16_Ex02
         /// <returns></returns>
         private bool IsColumnFree(int i_column)
         {
-            return (slotsMatrix[i_column, 0] == eSlotState.Empty);
+            return (m_slotsMatrix[i_column, 0] == eSlotState.Empty);
         }
 
         /// <summary>
@@ -189,9 +200,7 @@ namespace B16_Ex02
         public enum eSlotState
         {
             Empty,
-
             Player1,
-
             Player2
         }
     }

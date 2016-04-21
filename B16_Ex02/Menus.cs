@@ -6,95 +6,110 @@ namespace B16_Ex02
 {
     internal class Menus
     {
-        private const string k_DimensionsInputTemplate = "Please enter number of {0} between {1} and {2}";
-        private const string k_MenuHeaderTemplate =
-@"========================================================
-* {0} *
-* {1} *
-========================================================
-";
-        private const string k_WordColumns = "columns";
-        private const string k_WordRows = "rows";
-        private const string k_DimensionsTitle = "Board dimensions selection";
-        private const string k_DimensionsDescriptionTemplate = "Dimensions must be between {0}X{0} and {1}X{1} ";
-        private const string k_GameModeTitle = "Game mode selection";
-        private const string k_GameModeDescriptionTemplate = "Enter '{0}' for two players or '{1}' for human vs machine";
-        private const char k_TwoPlayersSelectionKey = '1';
-        private const char k_ManVsMachineSelectionKey = '2';
-        private const string k_RestartGameMessage = @"Do you want another game? 
-Press {0} if so, press {1} to exit.";
-        private const char k_YesKey = 'y';
-        private const char k_NoKey = 'n';
-        private const string k_GoodByeMessage = @"Good bye, and thanks for playing
 
-
-Press enter to exit";
-
-
+        /// <summary>
+        /// Print board dimensions menu
+        /// </summary>
+        /// <param name="i_columns"></param>
+        /// <param name="i_rows"></param>
         public static void GetBoardDimensions(out int i_columns, out int i_rows)
         {
             Ex02.ConsoleUtils.Screen.Clear();
+            Console.ForegroundColor = GameColors.k_MenuHeadersColor;
+
             int gameMinDimension = FourInARowGame.k_MinDimension;
             int gameMaxDimension = FourInARowGame.k_MaxDimension;
+            string descriptionText = string.Format(GameTexts.k_DimensionsDescriptionTemplate, gameMinDimension, gameMaxDimension);
 
-            string descriptionText = string.Format(k_DimensionsDescriptionTemplate, gameMinDimension, gameMaxDimension);
-            Console.WriteLine(string.Format(k_MenuHeaderTemplate, k_DimensionsTitle, descriptionText));
+            Console.WriteLine(string.Format(GameTexts.k_MenuHeaderTemplate, GameTexts.k_DimensionsTitle, descriptionText));
 
             //get columns
-            Console.WriteLine(string.Format(k_DimensionsInputTemplate, k_WordColumns, gameMinDimension, gameMaxDimension));
+            Console.WriteLine(string.Format(GameTexts.k_DimensionsInputTemplate, GameTexts.k_WordColumns, gameMinDimension, gameMaxDimension));
             i_columns = InputUtils.GetBoundedIntFromConsole(gameMinDimension, gameMaxDimension);
 
             //get rows
-            Console.WriteLine(string.Format(k_DimensionsInputTemplate, k_WordRows, gameMinDimension, gameMaxDimension));
+            Console.WriteLine(string.Format(GameTexts.k_DimensionsInputTemplate, GameTexts.k_WordRows, gameMinDimension, gameMaxDimension));
             i_rows = InputUtils.GetBoundedIntFromConsole(gameMinDimension, gameMaxDimension);
+
+            Console.ForegroundColor = GameColors.k_BaseColor;
         }
 
+        /// <summary>
+        /// Prints game mode menu
+        /// </summary>
+        /// <returns></returns>
         public static FourInARowGame.eGameMode GetGameMode()
         {
             Ex02.ConsoleUtils.Screen.Clear();
+            Console.ForegroundColor = GameColors.k_MenuHeadersColor;
             FourInARowGame.eGameMode selectedGameMode = FourInARowGame.eGameMode.ManVsMachine;
-            string descriptionText = string.Format(k_GameModeDescriptionTemplate,
-                k_TwoPlayersSelectionKey, k_ManVsMachineSelectionKey);
-            Console.WriteLine(string.Format(k_MenuHeaderTemplate, k_GameModeTitle, descriptionText));
+            string descriptionText = string.Format(GameTexts.k_GameModeDescriptionTemplate,
+                GameKeys.k_TwoPlayersSelectionKey, GameKeys.k_ManVsMachineSelectionKey);
+            Console.WriteLine(string.Format(GameTexts.k_MenuHeaderTemplate, GameTexts.k_GameModeTitle, descriptionText));
 
-            char userInput = InputUtils.GetSepcificCharsFromConsole(k_TwoPlayersSelectionKey, k_ManVsMachineSelectionKey);
+            char userInput = InputUtils.GetSepcificCharsFromConsole(GameKeys.k_TwoPlayersSelectionKey, GameKeys.k_ManVsMachineSelectionKey);
 
-            if (userInput == k_TwoPlayersSelectionKey)
+            if (userInput == GameKeys.k_TwoPlayersSelectionKey)
             {
                 selectedGameMode = FourInARowGame.eGameMode.TwoPlayers;
             }
 
+            Console.ForegroundColor = GameColors.k_BaseColor;
             return selectedGameMode;
         }
 
         /// <summary>
-        /// Prints a 
+        /// Prints win screen, adds winner name to screen template
         /// </summary>
-        /// <param name="i_winnerName"></param>
-        public static void ShowWinScreen(string i_winnerName)
+        /// <param name="i_winner"></param>
+        public static void ShowWinScreen(Player i_winner)
         {
+            Console.ForegroundColor = GameColors.k_WinColor;
             Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine(string.Format("Player {0} wins !", i_winnerName));
+
+            Console.WriteLine(string.Format(GameTexts.k_WinScreenTemplate, i_winner.r_name));
+            Console.ReadLine();
+            Console.ForegroundColor = GameColors.k_BaseColor;
         }
 
+        /// <summary>
+        /// Prints Tie screen
+        /// </summary>
         public static void ShowTieScreen()
         {
+            Console.ForegroundColor = GameColors.k_TieColor;
             Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine("It's a tie!");
+
+            Console.WriteLine(GameTexts.k_TieScreen);
+            Console.ReadLine();
+            Console.ForegroundColor = GameColors.k_BaseColor;
         }
 
-
-        public static bool RestartGameMessage()
+        /// <summary>
+        /// Prints restart messgae and returns user selection (weather to restart of exit)
+        /// </summary>
+        /// <param name="m_players"></param>
+        /// <returns></returns>
+        public static bool RestartGameMessage(List<Player> i_playersList)
         {
-            Console.WriteLine(string.Format(k_RestartGameMessage, k_YesKey, k_NoKey));
-            char selectionChar = InputUtils.GetSepcificCharsFromConsole(k_YesKey, k_NoKey);
-            return selectionChar == k_YesKey;
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine(
+                string.Format(
+                    GameTexts.k_RestartGameScreenTemplate,
+                    i_playersList[0].r_name,
+                    i_playersList[0].Score,
+                    i_playersList[1].r_name,
+                    i_playersList[1].Score,
+                    GameKeys.k_YesKey,
+                    GameKeys.k_NoKey));
+            char selectionChar = InputUtils.GetSepcificCharsFromConsole(GameKeys.k_YesKey, GameKeys.k_NoKey);
+            return selectionChar == GameKeys.k_YesKey;
         }
 
         public static void GoodByeScreen()
         {
             Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine(k_GoodByeMessage);
+            Console.WriteLine(GameTexts.k_GoodByeMessage);
             Console.ReadLine();
         }
     }

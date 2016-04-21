@@ -8,10 +8,6 @@ namespace B16_Ex02
     {
         public const int k_MinDimension = 4;
         public const int k_MaxDimension = 8;
-        public const string k_ColumnIsntFreeMessageTemplate = "Column {0} isn't free, please choose another";
-
-        private const string k_Player1Name = "Player1";
-        private const string k_Player2Name = "Player2";
 
         private Board m_board;
         private List<Player> m_players;
@@ -24,20 +20,6 @@ namespace B16_Ex02
             InitializeBoard();
             InitializeGameMode();
             StartGame();
-//            Board b = new Board(5,4);
-//            Console.ReadLine();
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player2);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(2, Board.eSlotState.Player1);
-//            b.UpdateBoard();
-//            Console.ReadLine();
-//            b.AddPieceToColumn(0, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(1, Board.eSlotState.Player2);
-//            b.AddPieceToColumn(3, Board.eSlotState.Player1);
-//            b.AddPieceToColumn(0, Board.eSlotState.Player2);
-//            b.UpdateBoard();
         }
 
         /// <summary>
@@ -60,16 +42,16 @@ namespace B16_Ex02
         private void InitializeGameMode()
         {
             m_players = new List<Player>();
-            m_players.Add(new HumanPlayer(k_Player1Name));
+            m_players.Add(new HumanPlayer(GameTexts.k_Player1Name));
             m_gameMode = Menus.GetGameMode();
 
             if (m_gameMode == eGameMode.TwoPlayers)
             {
-                m_players.Add(new ComputerPlayer());
+                m_players.Add(new HumanPlayer(GameTexts.k_Player2Name));
             }
             else
             {
-                m_players.Add(new HumanPlayer(k_Player2Name));
+                m_players.Add(new ComputerPlayer());
             }
         }
 
@@ -87,6 +69,7 @@ namespace B16_Ex02
         private void TakeTurn()
         {
             m_board.PrintBoard();
+            Console.WriteLine(string.Format(GameTexts.k_playersTurnTextTemplate, m_players[m_currentPlayerIndex].r_name));
             PlayerMove();
             if (CheckIfWin())
             {
@@ -109,29 +92,59 @@ namespace B16_Ex02
         private void ShowGameTieScreen()
         {
             Menus.ShowTieScreen();
-            if (Menus.RestartGameMessage())
+            ShowRestartScreen();
+        }
+
+        private void PlayAgain()
+        {
+            m_board.EmptyBoard();
+            m_currentPlayerIndex = 0;
+            TakeTurn();
+        }
+
+        /// <summary>
+        /// Congradulate winner
+        /// </summary>
+        private void ShowGameWinScreen()
+        {
+            Player winner = m_players[m_currentPlayerIndex];
+            winner.Score++;
+            Menus.ShowWinScreen(winner);
+            ShowRestartScreen();
+        }
+
+        /// <summary>
+        /// Show PlayAgain screen and wait for user input
+        /// exit game or continue to another accordingly
+        /// </summary>
+        private void ShowRestartScreen()
+        {
+            bool restartGameUserSelection = Menus.RestartGameMessage(m_players);
+            if (restartGameUserSelection)
             {
-                Restart();
+                PlayAgain();
             }
             else
             {
-                Menus.GoodByeScreen();
+                ExitGame();
             }
         }
 
-        private void Restart()
+        /// <summary>
+        /// When exiting game show good bye screeen
+        /// </summary>
+        private void ExitGame()
         {
-            
+            Menus.GoodByeScreen();
         }
 
-        private void ShowGameWinScreen()
-        {
-            Menus.ShowWinScreen(m_players[m_currentPlayerIndex].r_name);
-        }
-
+        /// <summary>
+        /// Check board for winner
+        /// </summary>
+        /// <returns></returns>
         private bool CheckIfWin()
         {
-            return false;
+            return BoardAnalyzer.IsGameWon(ref m_board);
         }
 
         /// <summary>
@@ -146,7 +159,7 @@ namespace B16_Ex02
                                                    : Board.eSlotState.Player2;
             while (!m_board.AddPieceToColumn(selectedColumn,playerPieceType))
             {
-                Console.WriteLine(string.Format(k_ColumnIsntFreeMessageTemplate, selectedColumn));
+                Console.WriteLine(string.Format(GameTexts.k_ColumnIsntFreeMessageTemplate, selectedColumn));
                 selectedColumn = m_players[m_currentPlayerIndex].SelectColumn();
                 selectedColumn = InputUtils.GetIntFromConsole();
             }
