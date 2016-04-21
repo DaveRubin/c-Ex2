@@ -34,13 +34,14 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="BoardAnalyzer.cs" />
+    <Compile Include="BoardView.cs" />
     <Compile Include="ComputerPlayer.cs" />
     <Compile Include="FourInARowGame.cs" />
     <Compile Include="GameColors.cs" />
     <Compile Include="GameKeys.cs" />
     <Compile Include="GameTexts.cs" />
     <Compile Include="HumanPlayer.cs" />
-    <Compile Include="Menus.cs" />
+    <Compile Include="GameView.cs" />
     <Compile Include="InputUtils.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

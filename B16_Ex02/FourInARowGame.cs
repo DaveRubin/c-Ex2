@@ -30,7 +30,7 @@ namespace B16_Ex02
             int columns;
             int rows;
 
-            Menus.GetBoardDimensions(out columns,out rows);
+            GameView.GetBoardDimensions(out columns,out rows);
 
             //initialize board
             m_board = new Board(columns,rows);
@@ -43,7 +43,7 @@ namespace B16_Ex02
         {
             m_players = new List<Player>();
             m_players.Add(new HumanPlayer(GameTexts.k_Player1Name));
-            m_gameMode = Menus.GetGameMode();
+            m_gameMode = GameView.GetGameMode();
 
             if (m_gameMode == eGameMode.TwoPlayers)
             {
@@ -68,8 +68,7 @@ namespace B16_Ex02
         /// </summary>
         private void TakeTurn()
         {
-            m_board.PrintBoard();
-            Console.WriteLine(string.Format(GameTexts.k_playersTurnTextTemplate, m_players[m_currentPlayerIndex].r_name));
+            GameView.ShowTurnScreen(m_board, m_players[m_currentPlayerIndex].r_name);
             PlayerMove();
             if (CheckIfWin())
             {
@@ -91,7 +90,7 @@ namespace B16_Ex02
 
         private void ShowGameTieScreen()
         {
-            Menus.ShowTieScreen();
+            GameView.ShowTieScreen();
             ShowRestartScreen();
         }
 
@@ -109,7 +108,7 @@ namespace B16_Ex02
         {
             Player winner = m_players[m_currentPlayerIndex];
             winner.Score++;
-            Menus.ShowWinScreen(winner);
+            GameView.ShowWinScreen(winner);
             ShowRestartScreen();
         }
 
@@ -119,7 +118,7 @@ namespace B16_Ex02
         /// </summary>
         private void ShowRestartScreen()
         {
-            bool restartGameUserSelection = Menus.RestartGameMessage(m_players);
+            bool restartGameUserSelection = GameView.RestartGameMessage(m_players);
             if (restartGameUserSelection)
             {
                 PlayAgain();
@@ -135,7 +134,7 @@ namespace B16_Ex02
         /// </summary>
         private void ExitGame()
         {
-            Menus.GoodByeScreen();
+            GameView.ShowGoodByeScreen();
         }
 
         /// <summary>

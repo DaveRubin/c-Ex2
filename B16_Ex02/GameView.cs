@@ -4,7 +4,7 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    internal class Menus
+    internal class GameView
     {
 
         /// <summary>
@@ -106,11 +106,17 @@ namespace B16_Ex02
             return selectionChar == GameKeys.k_YesKey;
         }
 
-        public static void GoodByeScreen()
+        public static void ShowGoodByeScreen()
         {
             Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine(GameTexts.k_GoodByeMessage);
             Console.ReadLine();
+        }
+
+        public static void ShowTurnScreen(Board i_board, string i_currentPlayerName)
+        {
+            BoardView.PrintBoard(i_board);
+            Console.WriteLine(string.Format(GameTexts.k_playersTurnTextTemplate, i_currentPlayerName));
         }
     }
 }
