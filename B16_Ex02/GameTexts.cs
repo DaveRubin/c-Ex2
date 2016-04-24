@@ -14,6 +14,7 @@ namespace B16_Ex02
         public const string k_playersTurnTextTemplate = "{0}'s turn";
         public const string k_Player1Name = "Player1";
         public const string k_Player2Name = "Player2";
+        public const string k_ComputerName = "COMPUTER";
         public const string k_DimensionsInputTemplate = "Please enter number of {0} between {1} and {2}";
         public const string k_MenuHeaderTemplate =
 @"========================================================
