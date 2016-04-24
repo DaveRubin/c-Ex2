@@ -8,6 +8,7 @@ namespace B16_Ex02
     {
         public readonly string r_name;
         private int m_score ;
+        private bool m_isHuman;
 
         public int Score
         {
@@ -21,8 +22,9 @@ namespace B16_Ex02
             }
         }
 
-        public Player(string i_name)
+        public Player(string i_name, bool i_isHuman)
         {
+            m_isHuman = i_isHuman;
             r_name = i_name;
             m_score = 0;
         }

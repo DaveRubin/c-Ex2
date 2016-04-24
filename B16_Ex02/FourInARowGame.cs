@@ -41,17 +41,19 @@ namespace B16_Ex02
         /// </summary>
         private void InitializeGameMode()
         {
+            bool playerHumanity = true;
             m_players = new List<Player>();
-            m_players.Add(new HumanPlayer(GameTexts.k_Player1Name));
+            m_players.Add(new Player(GameTexts.k_Player1Name, playerHumanity));
             m_gameMode = GameView.GetGameMode();
 
             if (m_gameMode == eGameMode.TwoPlayers)
             {
-                m_players.Add(new HumanPlayer(GameTexts.k_Player2Name));
+                m_players.Add(new Player(GameTexts.k_Player2Name, playerHumanity));
             }
             else
             {
-                m_players.Add(new ComputerPlayer());
+                playerHumanity = false;
+                m_players.Add(new Player(GameTexts.k_ComputerName, playerHumanity));
             }
         }
 
