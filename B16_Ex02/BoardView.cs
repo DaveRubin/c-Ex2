@@ -63,7 +63,7 @@ namespace B16_Ex02
             Console.Write(' ');
             for (int column = 0; column < i_numColumns; column++)
             {
-                Console.Write(string.Format(k_SlotTemplate, column + 1));
+                Console.Write(string.Format(k_SlotTemplate, column));
                 Console.Write(' ');
             }
             Console.Write(Environment.NewLine);
