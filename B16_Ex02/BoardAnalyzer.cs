@@ -12,12 +12,12 @@ namespace B16_Ex02
             /// Vertical search for winner
             for (int row = 0; row < i_Board.r_numOfRows - 3; row++)
             {
-                for (int col = 0; col < i_Board.r_numOfColumns; col++)
+                for (int col = 0; col < i_Board.r_numOfColumns - 1; col++)
                 {
-                    if (i_Board.m_slotsMatrix[row, col] != Board.eSlotState.Empty &&
-                    i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row + 1, col] &&
-                    i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row + 2, col] &&
-                    i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row + 3, col])
+                    if (i_Board.m_slotsMatrix[col, row] != Board.eSlotState.Empty &&
+                    i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col, row + 1] &&
+                    i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col, row + 2] &&
+                    i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col, row + 3])
                     {
                         return true;
                     }
@@ -29,10 +29,10 @@ namespace B16_Ex02
             {
                 for (int col = 0; col < i_Board.r_numOfColumns - 3; col++)
                 {
-                    if (i_Board.m_slotsMatrix[row, col] != Board.eSlotState.Empty &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row, col + 1] &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row, col + 2] &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row, col + 3])
+                    if (i_Board.m_slotsMatrix[col, row] != Board.eSlotState.Empty &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 1, row] &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 2, row] &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 3, row])
                     {
                         return true;
                     }
@@ -44,10 +44,10 @@ namespace B16_Ex02
             {
                 for (int col = 0; col < i_Board.r_numOfColumns - 3; col++)
                 {
-                    if (i_Board.m_slotsMatrix[row, col] != Board.eSlotState.Empty &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row + 1, col + 1] &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row + 2, col + 2] &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row + 3, col + 3])
+                    if (i_Board.m_slotsMatrix[col, row] != Board.eSlotState.Empty &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 1, row + 1] &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 2, row + 2] &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 3, row + 3])
                     {
                         return true;
                     }
@@ -59,10 +59,10 @@ namespace B16_Ex02
             {
                 for (int col = 0; col < i_Board.r_numOfColumns - 3; col++)
                 {
-                    if (i_Board.m_slotsMatrix[row, col] != Board.eSlotState.Empty &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row - 1, col + 1] &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row - 2, col + 2] &&
-                        i_Board.m_slotsMatrix[row, col] == i_Board.m_slotsMatrix[row - 3, col + 3])
+                    if (i_Board.m_slotsMatrix[col, row] != Board.eSlotState.Empty &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 1, row - 1] &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 2, row - 2] &&
+                        i_Board.m_slotsMatrix[col, row] == i_Board.m_slotsMatrix[col + 3, row - 3])
                     {
                         return true;
                     }
