@@ -58,12 +58,10 @@ namespace B16_Ex02
             if (IsColumnFree(i_column))
             {
                 int targetRow = r_numOfRows - 1;
-
                 while (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
                 {
                     targetRow--;
                 }
-
                 m_slotsMatrix[i_column, targetRow] = i_pieceType;
             }
             else
@@ -76,15 +74,22 @@ namespace B16_Ex02
         //remove piece from column
         public void RemovePieceFromColumn(int i_column)
         {
-            int targetRow = r_numOfRows - 1;
-            if (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
-            {
-                while (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
+           int targetRow = r_numOfRows - 1;
+           if (IsColumnFree(i_column))
+           {
+                if (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
                 {
-                    targetRow--;
+                    while (m_slotsMatrix[i_column, targetRow] != eSlotState.Empty)
+                    {
+                        targetRow--;
+                    }
+                    m_slotsMatrix[i_column, targetRow + 1] = eSlotState.Empty;
                 }
-                m_slotsMatrix[i_column, targetRow + 1] = eSlotState.Empty;
-            }
+           }
+           else
+           {
+               m_slotsMatrix[i_column, 0] = eSlotState.Empty;
+           }
         }
 
         /// <summary>
