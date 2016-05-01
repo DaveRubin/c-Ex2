@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BoardAnalyzer.cs" />
     <Compile Include="BoardView.cs" />
