@@ -118,5 +118,11 @@ namespace B16_Ex02
             BoardView.PrintBoard(i_board);
             Console.WriteLine(string.Format(GameTexts.k_playersTurnTextTemplate, i_currentPlayerName));
         }
+
+        public static void ShowWonScreen(Board i_board, string i_currentPlayerName)
+        {
+            BoardView.PrintBoard(i_board);
+            Console.WriteLine(string.Format(GameTexts.k_AskForKeyStroke));
+        }
     }
 }
