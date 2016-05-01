@@ -9,6 +9,15 @@ namespace B16_Ex02
         public readonly string r_name;
         private int m_score ;
         private bool m_isHuman;
+        private Board.eSlotState m_pieceType;
+
+        public bool IsHuman
+        {
+            get
+            {
+                return m_isHuman;
+            }
+        }
 
         public int Score
         {
@@ -22,16 +31,18 @@ namespace B16_Ex02
             }
         }
 
-        public Player(string i_name, bool i_isHuman)
+        public Player(string i_name, bool i_isHuman, Board.eSlotState i_pieceType)
         {
             m_isHuman = i_isHuman;
             r_name = i_name;
+            m_pieceType = i_pieceType;
             m_score = 0;
         }
 
-        public virtual int SelectColumn()
+        public int SelectColumn(ref Board i_board)
         {
-            return 0;
+            Board.eSlotState opponentPieceType = Board.eSlotState.Player1;
+            return AI.SelectMove(ref i_board, m_pieceType, opponentPieceType);
         }
     }
 }

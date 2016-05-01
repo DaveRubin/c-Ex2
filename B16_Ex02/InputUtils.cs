@@ -10,7 +10,7 @@ namespace B16_Ex02
         {
             int result = GetIntFromConsole();
 
-            while (result<i_min || result > i_max)
+            while (result < i_min || result > i_max)
             {
                 Console.WriteLine(
                     string.Format("Invalid input, please enter a number between {0} and {1} :", i_min, i_max));

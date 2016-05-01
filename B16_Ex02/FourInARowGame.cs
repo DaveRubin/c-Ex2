@@ -43,17 +43,17 @@ namespace B16_Ex02
         {
             bool playerHumanity = true;
             m_players = new List<Player>();
-            m_players.Add(new Player(GameTexts.k_Player1Name, playerHumanity));
+            m_players.Add(new Player(GameTexts.k_Player1Name, playerHumanity, Board.eSlotState.Player1));
             m_gameMode = GameView.GetGameMode();
 
             if (m_gameMode == eGameMode.TwoPlayers)
             {
-                m_players.Add(new Player(GameTexts.k_Player2Name, playerHumanity));
+                m_players.Add(new Player(GameTexts.k_Player2Name, playerHumanity, Board.eSlotState.Player2));
             }
             else
             {
                 playerHumanity = false;
-                m_players.Add(new Player(GameTexts.k_ComputerName, playerHumanity));
+                m_players.Add(new Player(GameTexts.k_ComputerName, playerHumanity, Board.eSlotState.Player2));
             }
         }
 
@@ -74,6 +74,8 @@ namespace B16_Ex02
             PlayerMove();
             if (CheckIfWin())
             {
+                GameView.ShowWonScreen(m_board, m_players[m_currentPlayerIndex].r_name);
+                Console.ReadLine();
                 ShowGameWinScreen();
             }
             else
@@ -153,16 +155,24 @@ namespace B16_Ex02
         /// </summary>
         private void PlayerMove()
         {
-            //int selectedColumn = m_players[m_currentPlayerIndex].SelectColumn();
-            int selectedColumn = InputUtils.GetIntFromConsole();
+            int selectedColumn = 0;
+            if (m_players[m_currentPlayerIndex].IsHuman)
+            {
+                /// get input from human player
+                selectedColumn = InputUtils.GetBoundedIntFromConsole(0, m_board.r_numOfColumns - 1);
+            }
+            else
+            {
+                /// get input from AI
+                selectedColumn = m_players[m_currentPlayerIndex].SelectColumn(ref m_board);
+            }
             Board.eSlotState playerPieceType = (m_currentPlayerIndex == 0)
                                                    ? Board.eSlotState.Player1
                                                    : Board.eSlotState.Player2;
             while (!m_board.AddPieceToColumn(selectedColumn,playerPieceType))
             {
                 Console.WriteLine(string.Format(GameTexts.k_ColumnIsntFreeMessageTemplate, selectedColumn));
-                selectedColumn = m_players[m_currentPlayerIndex].SelectColumn();
-                selectedColumn = InputUtils.GetIntFromConsole();
+                selectedColumn = InputUtils.GetBoundedIntFromConsole(0, m_board.r_numOfColumns - 1);
             }
         }
 
