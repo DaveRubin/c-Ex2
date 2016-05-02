@@ -4,9 +4,8 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    class BoardView
+    internal class BoardView
     {
-
         private const char k_P1Symbol = 'O';
         private const char k_P2Symbol = 'X';
         private const char k_EmptySymbol = ' ';
@@ -25,7 +24,7 @@ namespace B16_Ex02
             Board.eSlotState[,] slotMatrix = i_board.SlotsMatrix;
 
             StringBuilder separatorRow = new StringBuilder();
-            int seperatorRowLength = numOfColumns * (k_SlotTemplate.Length - 1) + 1;
+            int seperatorRowLength = (numOfColumns * (k_SlotTemplate.Length - 1)) + 1;
             separatorRow.Append(k_TableVerticalSeperatorChar, seperatorRowLength);
 
             Ex02.ConsoleUtils.Screen.Clear();
@@ -44,14 +43,13 @@ namespace B16_Ex02
 
                     Printslot(slotType);
                     Console.Write(k_TableHorizontalSeperatorChar);
-
                 }
 
                 Console.Write(Environment.NewLine);
                 Console.WriteLine(separatorRow);
             }
 
-            //extra padding at the bottom
+            // extra padding at the bottom
             Console.Write(Environment.NewLine);
         }
 
@@ -63,9 +61,10 @@ namespace B16_Ex02
             Console.Write(' ');
             for (int column = 0; column < i_numColumns; column++)
             {
-                Console.Write(string.Format(k_SlotTemplate, column+1));
+                Console.Write(string.Format(k_SlotTemplate, column + 1));
                 Console.Write(' ');
             }
+
             Console.Write(Environment.NewLine);
         }
 
