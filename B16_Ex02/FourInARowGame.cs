@@ -162,7 +162,11 @@ namespace B16_Ex02
             if (m_players[m_currentPlayerIndex].IsHuman)
             {
                 /// get input from human player
-                selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(0, m_board.r_numOfColumns - 1, GameKeys.k_QuitGameKey, ref m_isQuitSelected);
+                selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(
+                    0,
+                    m_board.r_numOfColumns - 1,
+                    GameKeys.k_QuitGameKey,
+                    ref m_isQuitSelected);
             }
             else
             {
@@ -170,16 +174,18 @@ namespace B16_Ex02
                 selectedColumn = m_players[m_currentPlayerIndex].SelectColumn(ref m_board);
             }
 
-
             Board.eSlotState playerPieceType = (m_currentPlayerIndex == 0)
                                                    ? Board.eSlotState.Player1
                                                    : Board.eSlotState.Player2;
             while (!m_isQuitSelected && !m_board.AddPieceToColumn(selectedColumn, playerPieceType))
             {
                 Console.WriteLine(string.Format(GameTexts.k_ColumnIsntFreeMessageTemplate, selectedColumn));
-                selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(0, m_board.r_numOfColumns - 1, GameKeys.k_QuitGameKey, ref m_isQuitSelected);
+                selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(
+                    0,
+                    m_board.r_numOfColumns - 1,
+                    GameKeys.k_QuitGameKey,
+                    ref m_isQuitSelected);
             }
-
         }
 
         public enum eGameMode
