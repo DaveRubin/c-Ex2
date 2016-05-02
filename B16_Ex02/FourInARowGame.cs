@@ -170,7 +170,9 @@ namespace B16_Ex02
             else
             {
                 /// get input from AI
-                selectedColumn = m_players[m_currentPlayerIndex].SelectColumn(ref m_board);
+                /// selectedColumn = m_players[m_currentPlayerIndex].SelectColumn(ref m_board);
+                Board.eSlotState opponentPieceType = Board.eSlotState.Player1;
+                selectedColumn = AI.SelectMove(ref m_board, Board.eSlotState.Player2, opponentPieceType);
             }
 
             Board.eSlotState playerPieceType = (m_currentPlayerIndex == 0)

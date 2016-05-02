@@ -39,10 +39,10 @@ namespace B16_Ex02
             m_score = 0;
         }
 
-        public int SelectColumn(ref Board i_board)
-        {
-            Board.eSlotState opponentPieceType = Board.eSlotState.Player1;
-            return AI.SelectMove(ref i_board, m_pieceType, opponentPieceType);
-        }
+        /// public int SelectColumn(ref Board i_board)
+        /// {
+        ///    Board.eSlotState opponentPieceType = Board.eSlotState.Player1;
+        ///    return AI.SelectMove(ref i_board, m_pieceType, opponentPieceType);
+        /// }
     }
 }
