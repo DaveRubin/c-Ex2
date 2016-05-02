@@ -13,6 +13,7 @@ namespace B16_Ex02
         private List<Player> m_players;
         private int m_currentPlayerIndex;
         private eGameMode m_gameMode;
+        private bool m_isQuitSelected = false;
 
 
         public FourInARowGame()
@@ -72,23 +73,25 @@ namespace B16_Ex02
         {
             GameView.ShowTurnScreen(m_board, m_players[m_currentPlayerIndex].r_name);
             PlayerMove();
-            if (CheckIfWin())
+            
+            if (m_isQuitSelected)
+            {
+                ExitGame();
+            }
+            else if (CheckIfWin())
             {
                 GameView.ShowWonScreen(m_board, m_players[m_currentPlayerIndex].r_name);
                 Console.ReadLine();
                 ShowGameWinScreen();
             }
+            else if (m_board.IsFull)
+            {
+                ShowGameTieScreen();
+            }
             else
             {
-                if (m_board.IsFull)
-                {
-                    ShowGameTieScreen();
-                }
-                else
-                {
-                    m_currentPlayerIndex = (m_currentPlayerIndex + 1) % 2;
-                    TakeTurn();
-                }
+                m_currentPlayerIndex = (m_currentPlayerIndex + 1) % 2;
+                TakeTurn();
             }
         }
 
@@ -159,21 +162,24 @@ namespace B16_Ex02
             if (m_players[m_currentPlayerIndex].IsHuman)
             {
                 /// get input from human player
-                selectedColumn = InputUtils.GetBoundedIntFromConsole(0, m_board.r_numOfColumns - 1);
+                selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(0, m_board.r_numOfColumns - 1, GameKeys.k_QuitGameKey, ref m_isQuitSelected);
             }
             else
             {
                 /// get input from AI
                 selectedColumn = m_players[m_currentPlayerIndex].SelectColumn(ref m_board);
             }
+
+
             Board.eSlotState playerPieceType = (m_currentPlayerIndex == 0)
                                                    ? Board.eSlotState.Player1
                                                    : Board.eSlotState.Player2;
-            while (!m_board.AddPieceToColumn(selectedColumn,playerPieceType))
+            while (!m_isQuitSelected && !m_board.AddPieceToColumn(selectedColumn, playerPieceType))
             {
                 Console.WriteLine(string.Format(GameTexts.k_ColumnIsntFreeMessageTemplate, selectedColumn));
-                selectedColumn = InputUtils.GetBoundedIntFromConsole(0, m_board.r_numOfColumns - 1);
+                selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(0, m_board.r_numOfColumns - 1, GameKeys.k_QuitGameKey, ref m_isQuitSelected);
             }
+
         }
 
         public enum eGameMode
