@@ -4,9 +4,9 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    class AI
+    internal class AI
     {
-        static public int SelectMove(ref Board i_board, Board.eSlotState i_pieceTypePlayer, Board.eSlotState i_pieceTypeOpponent)
+        public static int SelectMove(ref Board i_board, Board.eSlotState i_pieceTypePlayer, Board.eSlotState i_pieceTypeOpponent)
         {
             int res = 0;
             for (int column = 0; column < i_board.r_numOfColumns; column++)
@@ -16,6 +16,7 @@ namespace B16_Ex02
                     return column;
                 }
             }
+
             for (int column = 0; column < i_board.r_numOfColumns; column++)
             {
                 if (BoardAnalyzer.IsWinnningMove(ref i_board, column, i_pieceTypeOpponent))
@@ -23,12 +24,14 @@ namespace B16_Ex02
                     return column;
                 }
             }
+
             Random r = new Random();
-            int randomInt = r.Next(0,i_board.r_numOfColumns - 1);
+            int randomInt = r.Next(0, i_board.r_numOfColumns - 1);
             while (!i_board.AddPieceToColumn(randomInt, i_pieceTypePlayer))
             {
-                randomInt = r.Next(0,i_board.r_numOfColumns - 1);
+                randomInt = r.Next(0, i_board.r_numOfColumns - 1);
             }
+
             res = randomInt;
             i_board.RemovePieceFromColumn(res);
             return res;
