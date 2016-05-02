@@ -22,6 +22,7 @@ namespace B16_Ex02
                     }
                 }
             }
+
             /// Horizontal search for winner
             for (int row = 0; row < i_Board.r_numOfRows; row++)
             {
@@ -36,6 +37,7 @@ namespace B16_Ex02
                     }
                 } 
             }
+
             /// Right and down diagonal search for winner
             for (int row = 0; row < i_Board.r_numOfRows - 3; row++)
             {
@@ -50,6 +52,7 @@ namespace B16_Ex02
                     }
                 }
             }
+
             /// Right and up diagonal search for winner
             for (int row = 3; row < i_Board.r_numOfRows; row++)
             {
@@ -64,6 +67,7 @@ namespace B16_Ex02
                     }
                 }
             }
+
             return false;
         }
 
@@ -82,6 +86,7 @@ namespace B16_Ex02
                     return false;
                 }
             }
+
             return false;
         }
     }

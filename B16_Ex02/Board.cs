@@ -14,7 +14,7 @@ namespace B16_Ex02
         {
             get
             {
-                //TODO: ask about a more efficient way to get the matrix out and still protect 'slotsMatrix' data
+                // TODO: ask about a more efficient way to get the matrix out and still protect 'slotsMatrix' data
                 return (eSlotState[,])m_slotsMatrix.Clone();
             }
         }
@@ -32,6 +32,7 @@ namespace B16_Ex02
                         break;
                     }
                 }
+
                 return result;
             }
         }
@@ -41,7 +42,7 @@ namespace B16_Ex02
         /// </summary>
         /// <param name="i_columns"></param>
         /// <param name="i_rows"></param>
-        public Board(int i_columns, int i_rows )
+        public Board(int i_columns, int i_rows)
         {
             r_numOfRows = i_rows;
             r_numOfColumns = i_columns;
@@ -49,8 +50,8 @@ namespace B16_Ex02
             EmptyBoard();
         }
 
-        //add piece to column , 
-        //return false if column is full
+        // add piece to column , 
+        // return false if column is full
         public bool AddPieceToColumn(int i_column, eSlotState i_pieceType)
         {
             bool success = true;
@@ -62,6 +63,7 @@ namespace B16_Ex02
                 {
                     targetRow--;
                 }
+
                 m_slotsMatrix[i_column, targetRow] = i_pieceType;
             }
             else
@@ -71,7 +73,8 @@ namespace B16_Ex02
 
             return success;
         }
-        //remove piece from column
+
+        // remove piece from column
         public void RemovePieceFromColumn(int i_column)
         {
            int targetRow = r_numOfRows - 1;
@@ -83,6 +86,7 @@ namespace B16_Ex02
                     {
                         targetRow--;
                     }
+
                     m_slotsMatrix[i_column, targetRow + 1] = eSlotState.Empty;
                 }
            }
@@ -113,7 +117,7 @@ namespace B16_Ex02
         /// <returns></returns>
         private bool IsColumnFree(int i_column)
         {
-            return (m_slotsMatrix[i_column, 0] == eSlotState.Empty);
+            return m_slotsMatrix[i_column, 0] == eSlotState.Empty;
         }
 
         /// <summary>

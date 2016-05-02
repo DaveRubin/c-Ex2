@@ -7,7 +7,7 @@ namespace B16_Ex02
     internal class Player
     {
         public readonly string r_name;
-        private int m_score ;
+        private int m_score;
         private bool m_isHuman;
         private Board.eSlotState m_pieceType;
 
@@ -25,6 +25,7 @@ namespace B16_Ex02
             {
                 return m_score;
             }
+
             set
             {
                 m_score = value;
