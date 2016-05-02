@@ -163,10 +163,10 @@ namespace B16_Ex02
             {
                 /// get input from human player
                 selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(
-                    0,
-                    m_board.r_numOfColumns - 1,
+                    1,
+                    m_board.r_numOfColumns,
                     GameKeys.k_QuitGameKey,
-                    ref m_isQuitSelected);
+                    ref m_isQuitSelected) - 1;
             }
             else
             {
@@ -181,10 +181,10 @@ namespace B16_Ex02
             {
                 Console.WriteLine(string.Format(GameTexts.k_ColumnIsntFreeMessageTemplate, selectedColumn));
                 selectedColumn = InputUtils.GetBoundedIntOrQuitFromConsole(
-                    0,
-                    m_board.r_numOfColumns - 1,
+                    1,
+                    m_board.r_numOfColumns,
                     GameKeys.k_QuitGameKey,
-                    ref m_isQuitSelected);
+                    ref m_isQuitSelected) - 1;
             }
         }
 
