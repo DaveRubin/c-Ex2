@@ -9,7 +9,6 @@ namespace B16_Ex02
     /// </summary>
     internal class GameTexts
     {
-
         public const string k_ColumnIsntFreeMessageTemplate = "Column {0} isn't free, please choose another";
         public const string k_playersTurnTextTemplate = "{0}'s turn";
         public const string k_Player1Name = "Player1";
@@ -22,6 +21,7 @@ namespace B16_Ex02
 * {1} *
 ========================================================
 ";
+
         public const string k_WordColumns = "columns";
         public const string k_WordRows = "rows";
         public const string k_DimensionsTitle = "Board dimensions selection";
@@ -37,6 +37,7 @@ namespace B16_Ex02
 
         Press enter to continue
 =========================================================";
+
         public const string k_TieScreen =
 @"=========================================================
 
@@ -46,6 +47,7 @@ namespace B16_Ex02
 
         Press enter to continue
 =========================================================";
+
         public const string k_RestartGameScreenTemplate =
 @"=========================================================
 
@@ -58,6 +60,7 @@ namespace B16_Ex02
             -'{5}' to exit.
 
 =========================================================";
+
         public const string k_GoodByeMessage = 
 @"=======================================
 =                                     =
@@ -70,6 +73,7 @@ namespace B16_Ex02
 =                                     =
 =                                     =
 =======================================";
+
         public const string k_AskForKeyStroke =
 @"=======================================
     Press any key to continue.

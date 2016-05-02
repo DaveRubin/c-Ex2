@@ -4,7 +4,6 @@ using System.Text;
 
 namespace B16_Ex02
 {
-
     internal class InputUtils
     {
         public const string k_GetBoundedIntFromConsoleTemplate = "Invalid input, please enter a number between {0} and {1} :";
@@ -18,13 +17,12 @@ namespace B16_Ex02
         {
             int result = GetIntFromConsole();
 
-            while (!IntInBounds(result,i_min,i_max))
+            while (!IntInBounds(result, i_min, i_max))
             {
                 Console.WriteLine(
                     string.Format(k_GetBoundedIntFromConsoleTemplate, i_min, i_max));
                 result = GetIntFromConsole();
             }
-
 
             return result;
         }
@@ -59,11 +57,10 @@ namespace B16_Ex02
 
                 while (validcharsString.IndexOf(result) == -1)
                 {
-                    //TODO: imporve user feedback on invalid input
+                    // TODO: imporve user feedback on invalid input
                     Console.WriteLine(k_GetSepcificCharsFromConsoleInvalidTemplate, validcharsString);
                     result = GetSingleCharFromConsole();
                 }
-
             }
             else
             {
@@ -93,8 +90,11 @@ namespace B16_Ex02
         {
             string userInput = Console.ReadLine();
             int result = -1;
-            while (!(StringEqualsChar(userInput,i_QuitGameChar) || //string equals the quit char
-                       (int.TryParse(userInput, out result) && IntInBounds(result,i_min,i_max) ))) //or an int in the wanted bounds
+            
+            // string equals the quit char
+            // or an int in the wanted bounds
+            while (!(StringEqualsChar(userInput, i_QuitGameChar) || (int.TryParse(userInput, out result)
+                                                                     && IntInBounds(result, i_min, i_max)))) 
             {
                 Console.WriteLine(
                     string.Format(
@@ -122,7 +122,7 @@ namespace B16_Ex02
         /// <returns></returns>
         private static bool IntInBounds(int i_number, int i_min, int i_max)
         {
-            return (i_min <= i_number && i_number <= i_max);
+            return i_min <= i_number && i_number <= i_max;
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace B16_Ex02
         /// <returns></returns>
         private static bool StringEqualsChar(string i_string, char i_char)
         {
-            return (i_string.Length == 1 && i_char == i_string[0]);
+            return i_string.Length == 1 && i_char == i_string[0];
         }
     }
 }

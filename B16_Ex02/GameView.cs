@@ -6,7 +6,6 @@ namespace B16_Ex02
 {
     internal class GameView
     {
-
         /// <summary>
         /// Print board dimensions menu
         /// </summary>
@@ -23,11 +22,11 @@ namespace B16_Ex02
 
             Console.WriteLine(string.Format(GameTexts.k_MenuHeaderTemplate, GameTexts.k_DimensionsTitle, descriptionText));
 
-            //get columns
+            // get columns
             Console.WriteLine(string.Format(GameTexts.k_DimensionsInputTemplate, GameTexts.k_WordColumns, gameMinDimension, gameMaxDimension));
             i_columns = InputUtils.GetBoundedIntFromConsole(gameMinDimension, gameMaxDimension);
 
-            //get rows
+            // get rows
             Console.WriteLine(string.Format(GameTexts.k_DimensionsInputTemplate, GameTexts.k_WordRows, gameMinDimension, gameMaxDimension));
             i_rows = InputUtils.GetBoundedIntFromConsole(gameMinDimension, gameMaxDimension);
 
@@ -43,8 +42,10 @@ namespace B16_Ex02
             Ex02.ConsoleUtils.Screen.Clear();
             Console.ForegroundColor = GameColors.k_MenuHeadersColor;
             FourInARowGame.eGameMode selectedGameMode = FourInARowGame.eGameMode.ManVsMachine;
-            string descriptionText = string.Format(GameTexts.k_GameModeDescriptionTemplate,
-                GameKeys.k_TwoPlayersSelectionKey, GameKeys.k_ManVsMachineSelectionKey);
+            string descriptionText = string.Format(
+                GameTexts.k_GameModeDescriptionTemplate,
+                GameKeys.k_TwoPlayersSelectionKey,
+                GameKeys.k_ManVsMachineSelectionKey);
             Console.WriteLine(string.Format(GameTexts.k_MenuHeaderTemplate, GameTexts.k_GameModeTitle, descriptionText));
 
             char userInput = InputUtils.GetSepcificCharsFromConsole(GameKeys.k_TwoPlayersSelectionKey, GameKeys.k_ManVsMachineSelectionKey);

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    class FourInARowGame
+    internal class FourInARowGame
     {
         public const int k_MinDimension = 4;
         public const int k_MaxDimension = 8;
@@ -14,7 +14,6 @@ namespace B16_Ex02
         private int m_currentPlayerIndex;
         private eGameMode m_gameMode;
         private bool m_isQuitSelected = false;
-
 
         public FourInARowGame()
         {
@@ -31,10 +30,10 @@ namespace B16_Ex02
             int columns;
             int rows;
 
-            GameView.GetBoardDimensions(out columns,out rows);
+            GameView.GetBoardDimensions(out columns, out rows);
 
-            //initialize board
-            m_board = new Board(columns,rows);
+            // initialize board
+            m_board = new Board(columns, rows);
         }
 
         /// <summary>
@@ -193,6 +192,5 @@ namespace B16_Ex02
             TwoPlayers,
             ManVsMachine
         }
-
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    class GameKeys
+    internal class GameKeys
     {
         public const char k_TwoPlayersSelectionKey = '1';
         public const char k_ManVsMachineSelectionKey = '2';
