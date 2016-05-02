@@ -26,10 +26,10 @@ namespace B16_Ex02
             }
 
             Random r = new Random();
-            int randomInt = r.Next(0, i_board.r_numOfColumns - 1);
+            int randomInt = r.Next(0, i_board.r_numOfColumns);
             while (!i_board.AddPieceToColumn(randomInt, i_pieceTypePlayer))
             {
-                randomInt = r.Next(0, i_board.r_numOfColumns - 1);
+                randomInt = r.Next(0, i_board.r_numOfColumns);
             }
 
             res = randomInt;
